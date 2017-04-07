@@ -1,30 +1,30 @@
 package com.tf.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
-import com.tf.entity.QuoteResponse;
 import com.tf.entity.User;
+import com.tf.repository.UserRepository;
 
 @Service
 @Transactional
 public class LoginServiceImpl implements LoginService {
 	
+	@Autowired
+	private UserRepository userRepo;
 	
 	@Override
 	public Boolean login(User user) {
-		
-		RestTemplate restTemplate = new RestTemplate();
-		QuoteResponse result =restTemplate.postForObject("http://localhost:8090/login", user, QuoteResponse.class);
-		if(result != null) {
-			if(result.getMessage().equalsIgnoreCase("Successful")) {
-				return Boolean.TRUE;
-			}
+		List<User> users = userRepo.getUser(user.getUserName());
+		if(users.size()==1) {
+			return Boolean.TRUE;
+		} else {
 			return Boolean.FALSE;
 		}
-		return Boolean.FALSE;
 	}
 
 }

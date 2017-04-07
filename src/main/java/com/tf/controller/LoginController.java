@@ -2,6 +2,7 @@ package com.tf.controller;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,9 +20,10 @@ public class LoginController {
 	@Autowired
 	private LoginService loginService;
 	
+	@CrossOrigin(origins="*")
 	@RequestMapping(value="/login",method=RequestMethod.POST)
 	public Boolean login(@RequestBody User user) {
-		logger.info("Login Service Started");
+		logger.info("Login Service Started ");
 		Boolean response = loginService.login(user);
 		logger.info("Login Service Ended");
 		return response;
