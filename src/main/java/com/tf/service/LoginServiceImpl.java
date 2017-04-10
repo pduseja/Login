@@ -20,7 +20,7 @@ public class LoginServiceImpl implements LoginService {
 	@Override
 	public Boolean login(User user) {
 		List<User> users = userRepo.getUser(user.getUserName());
-		if(users.size()==1) {
+		if(users.size()> 0) {
 			return Boolean.TRUE;
 		} else {
 			return Boolean.FALSE;
